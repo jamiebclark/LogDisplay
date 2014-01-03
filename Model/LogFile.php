@@ -5,6 +5,8 @@ class LogFile extends LogDisplayAppModel {
 	
 	private $logDir = null;
 	
+	const MAX_MEMORY = '1G';
+	
 	public function __construct($id = false, $table = null, $ds = null) {
 		if (empty($this->logDir)) {
 			$this->logDir = APP . 'tmp' . DS . 'logs' . DS;
@@ -22,6 +24,7 @@ class LogFile extends LogDisplayAppModel {
 	}
 	
 	public function getLines($name) {
+		ini_set('memory_limit', self::MAX_MEMORY);
 		$path = $this->logDir . $name;
 	//	$content = file_get_contents($path);
 	//	return explode("\n", $content);
