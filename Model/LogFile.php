@@ -23,8 +23,9 @@ class LogFile extends LogDisplayAppModel {
 	
 	public function getLines($name) {
 		$path = $this->logDir . $name;
-		$content = file_get_contents($path);
-		return explode("\n", $content);
+	//	$content = file_get_contents($path);
+	//	return explode("\n", $content);
+		return file($path);
 	}
 	
 	public function getContent($name, $params = array()) {
@@ -39,7 +40,8 @@ class LogFile extends LogDisplayAppModel {
 		list($offset, $length) = $limit;
 		
 		$lines = $this->getLines($name);
-		krsort($lines);			//Reads from bottom so newest goes on top
+		//krsort($lines);			//Reads from bottom so newest goes on top
+		$lines = array_reverse($lines);
 		
 		$result = array();
 		$key = count($lines);	//The current index key in our result array
