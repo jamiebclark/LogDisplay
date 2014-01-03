@@ -100,7 +100,6 @@ class LogFile extends LogDisplayAppModel {
 				continue;
 			}
 			$logType = preg_match('/^([^\.]+)\.log/', $file, $matches) ? $matches[1] : null;
-			
 			if (!empty($type) && $type != $logType) {
 				continue;
 			}
@@ -131,8 +130,7 @@ class LogFile extends LogDisplayAppModel {
 				}
 			}				
 			if ($findType == 'first') {
-				$result = $row;
-				break;
+				return $row;
 			} else {
 				$modifiedOrder[$key] = $modified;
 				$result[$key++] = $row;
