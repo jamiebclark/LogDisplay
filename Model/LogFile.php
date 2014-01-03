@@ -155,7 +155,7 @@ class LogFile extends LogDisplayAppModel {
 				$orderedResult[] = $result[$key];
 			}
 			
-			debug(compact('result', 'orderedResult')));
+			debug(compact('result', 'orderedResult'));
 			
 			return $result;
 		}
