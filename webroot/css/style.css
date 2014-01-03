@@ -1,0 +1,32 @@
+#logfilecontent {
+	max-height: 600px;
+	overflow: auto;
+	background-color: #CCC;
+	border-radius: 4px;
+}
+#logfilecontent dl, 
+#logfilecontent dd, 
+#logfilecontent dt {
+	display: block;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	padding: 5px;
+}
+
+#logfilecontent dt {
+	float: left;
+	width: 120px;
+	text-align: right;
+}
+
+.logfilecontent-more {
+	display: none;
+	background-color: #EEE;
+	border-radius: 4px;
+	margin: 10px;
+}
+
+#logfilecontent .logfilecontent-more dt {
+	width: 40px;
+}
