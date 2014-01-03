@@ -34,7 +34,7 @@ class LogFilesController extends LogDisplayAppController {
 			$typeName = $logFile['type'];
 			$logFiles = $this->LogFile->find('all', array('type' => $typeName));
 		}
-		$this->set(compact('typeName', 'logFiles', 'logFile'));
+		$this->set(compact('typeName', 'logFiles', 'logFile', 'logName'));
 	}
 	
 	private function _paginateContent($logName, $params = array()) {

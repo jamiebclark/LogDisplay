@@ -144,13 +144,19 @@ class LogFile extends LogDisplayAppModel {
 			return array_values($types);
 		} else {
 			//Makes sure they're returned base on last modified
+			debug($modifiedOrder);
 			arsort($modifiedOrder);
+			debug($modifiedOrder);
 			$modifiedOrder = array_keys($modifiedOrder);
+			debug($modifiedOrder);
 			
 			$orderedResult = array();
 			foreach($modifiedOrder as $key) {
 				$orderedResult[] = $result[$key];
 			}
+			
+			debug(compact('result', 'orderedResult')));
+			
 			return $result;
 		}
 	}	

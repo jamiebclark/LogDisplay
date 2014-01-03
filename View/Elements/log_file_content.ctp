@@ -3,7 +3,7 @@ set_time_limit(7200);
 //krsort($lines);
 
 $nav = '';
-$url = array(0 => $typeName, 'base' => false);
+$url = array(0 => $logName, 'base' => false);
 $lastPage = $totalPages - 1;
 
 if (!empty($totalPages) && $totalPages > 1) {
