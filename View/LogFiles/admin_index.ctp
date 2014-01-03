@@ -7,7 +7,7 @@
 </tr>
 <?php foreach ($logFileTypes as $logFileType): ?>
 <tr>
-	<td><?php echo $this->Html->link($logFileType['type'], array('action' => 'type', $logFileType['type'])); ?></td>
+	<td><?php echo $this->Html->link($logFileType['type'], array('action' => 'view', 'type' => $logFileType['type'])); ?></td>
 	<td><?php echo number_format($logFileType['count']); ?></td>
 	<td><?php echo date('F j, Y H:i:s', $logFileType['modified']); ?></td>
 </tr>

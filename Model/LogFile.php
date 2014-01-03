@@ -92,6 +92,9 @@ class LogFile extends LogDisplayAppModel {
 		$result = array();
 		$types = array();
 		
+		$modifiedOrder = array();
+		
+		$key = 0;
 		while (($file = readdir($fh)) !== false) {
 			if ($file == '.' || $file == '..' || $file == 'empty') {
 				continue;
@@ -131,7 +134,8 @@ class LogFile extends LogDisplayAppModel {
 				$result = $row;
 				break;
 			} else {
-				$result[] = $row;
+				$modifiedOrder[$key] = $modified;
+				$result[$key++] = $row;
 			}
 		}
 		closedir($fh);
@@ -139,6 +143,14 @@ class LogFile extends LogDisplayAppModel {
 		if ($findType == 'types') {
 			return array_values($types);
 		} else {
+			//Makes sure they're returned base on last modified
+			arsort($modifiedOrder);
+			$modifiedOrder = array_keys($modifiedOrder);
+			
+			$orderedResult = array();
+			foreach($modifiedOrder as $key) {
+				$orderedResult[] = $result[$key];
+			}
 			return $result;
 		}
 	}	

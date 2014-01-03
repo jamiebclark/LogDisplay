@@ -10,31 +10,31 @@ class LogFilesController extends LogDisplayAppController {
 	}
 	
 	public function admin_view($logName = null) {
+		if (empty($logName)) {
+			if (!empty($this->request->named['type'])) {
+				$typeName = $this->request->named['type'];
+				$logFiles = $this->LogFile->find('all', array('type' => $typeName));
+				if (empty($logFiles)) {
+					$this->redirect(array('action' => 'index'));
+				}
+				if (empty($logName)) {
+					$logName = $logFiles[0]['name'];
+				}
+			}
+		}		
+
 		$logFile = $this->LogFile->findByName($logName);
-		$this->_paginateContent($logName);
-		
 		if (empty($logFile)) {
 			$this->redirect(array('action' => 'index'));
 		}
 		
-		$typeName = $logFile['type'];
-		$logFiles = $this->LogFile->find('all', array('type' => $typeName));
-		$this->set(compact('typeName', 'logFiles', 'logFile'));
-	}
-	
-	public function admin_type($typeName = null) {
-		$logFiles = $this->LogFile->find('all', array('type' => $typeName));
-		if (empty($logFiles)) {
-			$this->redirect(array('action' => 'index'));
-		}
-		if (empty($logName)) {
-			$logName = $logFiles[0]['name'];
-		}
-		$logFile = $this->LogFile->findByName($logName);
 		$this->_paginateContent($logName);
-
+		
+		if (empty($typeName)) {
+			$typeName = $logFile['type'];
+			$logFiles = $this->LogFile->find('all', array('type' => $typeName));
+		}
 		$this->set(compact('typeName', 'logFiles', 'logFile'));
-		$this->render('admin_view');	
 	}
 	
 	private function _paginateContent($logName, $params = array()) {
