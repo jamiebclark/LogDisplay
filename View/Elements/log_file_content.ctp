@@ -5,6 +5,7 @@ set_time_limit(7200);
 $nav = '';
 $url = array(0 => $logName, 'base' => false);
 $lastPage = $totalPages - 1;
+$ids = array();
 
 if (!empty($totalPages) && $totalPages > 1) {
 	$padding = 3;
@@ -36,10 +37,11 @@ if (!empty($totalPages) && $totalPages > 1) {
 echo $nav;
 ?>
 <dl id="logfilecontent">
-<?php foreach ($logFileContent as $line): 
+<?php foreach ($logFileContent as $k => $line): 
 	$stamp = strtotime($line['date']);
 	$date = date('m/d/y H:i', $stamp);
-	$id = "date$stamp";
+	
+	$id = 'logfilecontent-line' . $k;
 	
 	$hover = '';
 	$more = array();
