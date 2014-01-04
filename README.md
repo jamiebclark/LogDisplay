@@ -10,7 +10,7 @@ Clone this into your CakePHP directory:
 <code>app/Plugin/LogDisplay</code>
 </pre>
 
-Enable it in your <cdoe>app/Config/bootstrap.php</code> file.
+Enable it in your <code>app/Config/bootstrap.php</code> file.
 
 Visit <code>/admin/log_display/log_files/</code>
 
