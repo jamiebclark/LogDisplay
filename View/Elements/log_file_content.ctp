@@ -47,7 +47,7 @@ echo $nav;
 	$more = array();
 	if (!empty($line['url'])) {
 		$hover = $line['url'];
-		$more['URL'] = $line['url'];
+		$more['URL'] = sprintf('<a target="_blank" href="%s">%s</a>', $line['url'], $line['url']);
 	}
 	if (!empty($line['stack'])) {
 		$more['Stack'] = '<ul><li>'. implode('</li><li>', $line['stack']) . '</li></ul>';

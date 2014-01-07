@@ -1,3 +1,14 @@
+<ul class="nav nav-tabs">
+	<?php foreach ($logFileTypes as $logFileType):
+		echo $this->Html->tag('li',
+			$this->Html->link(
+				sprintf('%s (%d)', $logFileType['type'], $logFileType['count']), 
+				array('type' => $logFileType['type'])
+			), array('class' => $logFileType['type'] == $typeName ? 'active' : null)
+		);
+	endforeach;?>
+</ul>
+		
 <h2><?php echo $typeName; ?> Log</h2>
 <h3><?php echo $logFile['name']; ?></h3>
 

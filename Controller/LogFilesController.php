@@ -10,6 +10,8 @@ class LogFilesController extends LogDisplayAppController {
 	}
 	
 	public function admin_view($logName = null) {
+		$logFileTypes = $this->LogFile->find('types');
+
 		if (empty($logName)) {
 			if (!empty($this->request->named['type'])) {
 				$typeName = $this->request->named['type'];
@@ -34,7 +36,7 @@ class LogFilesController extends LogDisplayAppController {
 			$typeName = $logFile['type'];
 			$logFiles = $this->LogFile->find('all', array('type' => $typeName));
 		}
-		$this->set(compact('typeName', 'logFiles', 'logFile', 'logName'));
+		$this->set(compact('typeName', 'logFiles', 'logFile', 'logName', 'logFileTypes'));
 	}
 	
 	private function _paginateContent($logName, $params = array()) {
