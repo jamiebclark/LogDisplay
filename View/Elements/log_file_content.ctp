@@ -30,7 +30,7 @@ if (!empty($totalPages) && $totalPages > 1) {
 			$this->Html->link('>>', Router::url(array('page' => $lastPage) + $url))
 		);
 	
-	$nav = $this->Html->div('pagination pagination-centered', $this->Html->tag('ul', $before . $nav . $after));
+	$nav = $this->Html->tag('ul', $before . $nav . $after, array('class' => 'pagination pagination-centered'));
 	echo sprintf('Showing %d-%d results of %d total', $currentPage * $perPage, ($currentPage + 1) * ($perPage) - 1, $lineCount);
 }
 
