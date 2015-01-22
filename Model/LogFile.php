@@ -44,33 +44,55 @@ class LogFile extends LogDisplayAppModel {
 		
 		$lines = $this->getLines($name);
 		//krsort($lines);			//Reads from bottom so newest goes on top
-		$lines = array_reverse($lines);
+		$reversedLines = array_reverse($lines);
 		
 		$result = array();
-		$key = count($lines);	//The current index key in our result array
+		$key = count($reversedLines);	//The current index key in our result array
 		
 		$lineCount = 0;			//How many lines into the log file we are
 		$resultCount = 0;		//How many lines we've stored in our result so far
 		
-		foreach ($lines as $line) {
+
+		$entryLines = array();
+		foreach ($reversedLines as $line) {
 			if (preg_match('/^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}) (.*)/', $line, $matches)) {
 				if ($lineCount++ < $offset) {
 					unset($result[$key]);
 					continue;
 				}
+				$entryLines = array_reverse($entryLines);
 				
 				$result[$key]['date'] = $matches[1];
 				$result[$key]['text'] = $matches[2];
 				$resultCount = count($result);
-				
+
+				$entryLinesCount = count($entryLines);
+				for ($i = 0; $i < $entryLinesCount; $i++) {
+					$entryLine = $entryLines[$i];
+					if ($entryLine == 'Exception Attributes: array (') {
+						$i++;
+						while (isset($entryLines[$i]) && $entryLines[$i] != "}" && preg_match("/[\t\s]*'([^']+)' => ([^,]+)/", $entryLines[$i], $matches)) {
+							$result[$key]['exceptionAttributes'][$matches[1]] = $matches[2];
+							$i++;
+						}
+						$entryLine = $entryLines[$i];
+						continue;
+					} else if (preg_match('/^Request URL: (.*)/', $entryLine, $matches)) {
+						$result[$key]['url'] = $matches[1];
+					} else if (empty($entryLine) || $entryLine == 'Trace:' || $entryLine == 'Stack Trace:') {
+						continue;
+					} else {
+						$result[$key]['stack'][] = $entryLine;
+					}
+				}
+
 				if (!empty($length) && $resultCount >= $length) {
 					break;
 				}
+				$entryLines = array();
 				$key--;
-			} else if (preg_match('/^Request URL: (.*)/', $line, $matches)) {
-				$result[$key]['url'] = $matches[1];
-			} else if (preg_match('/^#([0-9]+) (.*)/', $line, $matches)) {
-				$result[$key]['stack'][$matches[1]] = $matches[2];
+			} else {
+				$entryLines[] = trim($line);
 			}
 		}
 		return $result;
