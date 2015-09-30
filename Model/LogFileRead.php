@@ -28,7 +28,7 @@ class LogFileRead extends LogDisplayAppModel {
 		$path = $this->logDir . $name;
 	//	$content = file_get_contents($path);
 	//	return explode("\n", $content);
-		return file($path);
+		return is_file($path) ? file($path) : array();
 	}
 	
 	public function getContent($name, $params = array()) {
