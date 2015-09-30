@@ -2,20 +2,21 @@
 App::uses('LogDisplayAppController', 'LogDisplay.Controller');
 class LogFilesController extends LogDisplayAppController {
 	public $name = 'LogFiles';
+	public $uses = array('LogFileRead');
 	public $helpers = array('Number');
 	
 	public function admin_index() {
-		$logFileTypes = $this->LogFile->find('types');
+		$logFileTypes = $this->LogFileRead->find('types');
 		$this->set(compact('logFileTypes'));
 	}
 	
 	public function admin_view($logName = null) {
-		$logFileTypes = $this->LogFile->find('types');
+		$logFileTypes = $this->LogFileRead->find('types');
 
 		if (empty($logName)) {
 			if (!empty($this->request->named['type'])) {
 				$typeName = $this->request->named['type'];
-				$logFiles = $this->LogFile->find('all', array('type' => $typeName));
+				$logFiles = $this->LogFileRead->find('all', array('type' => $typeName));
 				if (empty($logFiles)) {
 					$this->redirect(array('action' => 'index'));
 				}
@@ -25,7 +26,7 @@ class LogFilesController extends LogDisplayAppController {
 			}
 		}		
 
-		$logFile = $this->LogFile->findByName($logName);
+		$logFile = $this->LogFileRead->findByName($logName);
 		if (empty($logFile)) {
 			$this->redirect(array('action' => 'index'));
 		}
@@ -34,14 +35,14 @@ class LogFilesController extends LogDisplayAppController {
 		
 		if (empty($typeName)) {
 			$typeName = $logFile['type'];
-			$logFiles = $this->LogFile->find('all', array('type' => $typeName));
+			$logFiles = $this->LogFileRead->find('all', array('type' => $typeName));
 		}
 		$this->set(compact('typeName', 'logFiles', 'logFile', 'logName', 'logFileTypes'));
 	}
 	
 	private function _paginateContent($logName, $params = array()) {
 		$perPage = 100;
-		if (!($lineCount = $this->LogFile->getLineCount($logName))) {
+		if (!($lineCount = $this->LogFileRead->getLineCount($logName))) {
 			return false;
 		}
 		
@@ -53,7 +54,7 @@ class LogFilesController extends LogDisplayAppController {
 		}
 		
 		$params['limit'] = array($currentPage * $perPage, $perPage);
-		$logFileContent = $this->LogFile->getContent($logName, $params);
+		$logFileContent = $this->LogFileRead->getContent($logName, $params);
 
 		$this->set(compact('logFileContent', 'totalPages', 'currentPage', 'perPage', 'lineCount'));
 		return $logFileContent;

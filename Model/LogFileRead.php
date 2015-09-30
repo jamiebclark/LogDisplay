@@ -1,6 +1,6 @@
 <?php
-class LogFile extends LogDisplayAppModel {
-	public $name = 'LogFile';
+class LogFileRead extends LogDisplayAppModel {
+	public $name = 'LogFileRead';
 	public $useTable = false;
 	
 	private $logDir = null;
