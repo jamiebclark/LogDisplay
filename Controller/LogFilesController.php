@@ -2,7 +2,7 @@
 App::uses('LogDisplayAppController', 'LogDisplay.Controller');
 class LogFilesController extends LogDisplayAppController {
 	public $name = 'LogFiles';
-	public $uses = array('LogFileRead');
+	public $uses = array('LogDisplay.LogFileRead');
 	public $helpers = array('Number');
 	
 	public function admin_index() {
