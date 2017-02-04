@@ -50,7 +50,7 @@ if (!empty($logFileContent)): ?>
 			$more['URL'] = sprintf('<a target="_blank" href="%s">%s</a>', $line['url'], $line['url']);
 		}
 		if (!empty($line['stack'])) {
-			$more['Stack'] = '<ul><li>'. implode('</li><li>', $line['stack']) . '</li></ul>';
+			$more['Stack'] = '<ul><li>'. implode('</li><li>', array_map('htmlentities', $line['stack'])) . '</li></ul>';
 		}
 		?>
 		<dt>
@@ -73,7 +73,7 @@ if (!empty($logFileContent)): ?>
 					<dl><?php
 					foreach ($more as $key => $val) {
 						echo $this->Html->tag('dt', $key);
-						echo $this->Html->tag('dd', htmlentities($val));
+						echo $this->Html->tag('dd', $val);
 					}
 					?></dl>
 				</div><?php 
