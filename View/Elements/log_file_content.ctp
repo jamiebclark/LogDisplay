@@ -67,13 +67,13 @@ if (!empty($logFileContent)): ?>
 			?>
 		</dt>
 		<dd><?php 
-			echo $line['text']; 
+			echo htmlentities($line['text']); 
 			if (!empty($more)): ?>
 				<div class="logfilecontent-more" id="<?php echo $id; ?>">
 					<dl><?php
 					foreach ($more as $key => $val) {
 						echo $this->Html->tag('dt', $key);
-						echo $this->Html->tag('dd', $val);
+						echo $this->Html->tag('dd', htmlentities($val));
 					}
 					?></dl>
 				</div><?php 
